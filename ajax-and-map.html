@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title> jQuery Example with $.ajax and $.map</title>
+	<link rel="stylesheet" href="css/normalize.min.css">
+	<link rel="stylesheet" href="css/simple.css">
+</head>
+<body>
+<h1>$.ajax() example with $.map()</h1>
+
+<p>This example uses <code>$.map()</code> to read an array of objects from one JSON file, extract data from each one, format it, and then write all of them into the HTML, using identical formatting for each. (There are 65 objects.)</p>
+
+<section>
+	<button id="call-script">Get Updated Content</button>
+	<button id="clear-divs">Remove the Content</button>
+</section>
+
+<!-- only scripts below this -->
+<script src="js/jquery.min.js"></script>
+
+<script>
+$(document).ready(function() {
+
+// do it when the button is clicked
+	$('body').on('click', '#call-script', function() {
+		// ajax gets the file from the server
+		$.ajax('js/potter.json', {
+		contentType: 'application/json',
+		dataType: 'json',
+		success: function(result) {
+			var allCharacters = $.map(result, function(object, index) {
+				var character = $('<div></div>');
+				// name and bio are the keys used in the JSON file 
+				$(character).append('<h2>' + object.name + '</h2>');
+				$(character).append('<p>' + object.bio + '</p>');
+				// $.map() builds a new array - each character is added
+				// to that array
+				return character;
+			});
+			// allCharacters is the new array - here it gets added to the HTML
+			$('body').append(allCharacters);
+		},
+		// give us a message if the JSON file didn't load correctly
+		error: function(request, errorType, errorMessage) {
+      alert('Error: ' + errorType + ' With message: ' + errorMessage);
+    },
+    timeout: 3000
+		});
+	});
+
+	// click the other button to remove what was added
+	$('body').on('click', '#clear-divs', function() {
+		$('div').remove();
+	});
+
+}); // end document ready
+</script>
+<!-- potter.json from https://github.com/efekarakus/potter-network -->
+</body>
+</html>
