@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title> jQuery Example with $.ajax and $.each</title>
+	<link rel="stylesheet" href="css/normalize.min.css">
+	<link rel="stylesheet" href="css/presidents.css">
+</head>
+<body>
+<h1>$.ajax() example with $.each()</h1>
+
+<p>This example uses <code>$.each()</code> to ... (There are 45 presidents.)</p>
+
+<p>First, jQuery loads the images into a CSS flexbox container, which distributes them in a grid. Note that by default, flexbox would distort the images that are shorter in height than others in their row; the property to correct that is <code>align-self</code>. Ideally, in this layout, all the images should be the same width and height. These images are all 300 pixels wide, but the height varies.</p>
+
+<section id="presidents"></section>
+
+<p>You should see 45 presidential portraits above.</p>
+
+<!-- only scripts below this -->
+<script src="js/jquery.min.js"></script>
+
+<script>
+$(document).ready(function() {
+	// load the president images
+	var num, filename, imgTag;
+	for (var i=1; i<46; i++) {
+		num = i.toString();
+		if (i < 10) {
+			num = "0" + num;
+		}
+		filename = "pr" + num + ".jpg";
+		imgTag = '<img class="small-pres" src="images/' + filename + '" alt="President">';
+		$('#presidents').append(imgTag);
+	}
+}); // end document ready
+</script>
+</body>
+</html>
