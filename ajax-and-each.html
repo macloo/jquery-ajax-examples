@@ -76,7 +76,7 @@ function positionInfo() {
 		.fadeIn();
 }
 
-// make a transparent overlay and put the #info on top
+// make a transparent overlay
 function showOverlay() {
 	// hide scrollbar
 	$('body').css('overflow', 'hidden');
@@ -85,6 +85,7 @@ function showOverlay() {
 		.css('top', $(document).scrollTop())
 		.css('opacity', '0')
 		.animate({'opacity' : '0.5'}, 'slow')
+		// click to close modal and restore scrolling
 		.click(function() {
 				$('#info').fadeOut();
 				$('#overlay').fadeOut().remove();
@@ -97,12 +98,16 @@ function showOverlay() {
 $('#presidents').on('click', 'img', function() {
 	// use DOM to get pres number from the clicked image
 	var whichClicked = $(this).index()+1;
+
+	// function above
 	showOverlay();
+
 	// we wouldn't need Ajax for this but we'll do it anyway
   $.ajax('js/pres.json', {
 		contentType: 'application/json',
 		dataType: 'json',
     success: function(result) {
+			// makes the div visible
 			$('#info').css( "display", "block" );
       $.each(result, function(index, pres) {
 				if (pres.Presidency == whichClicked) {
@@ -127,12 +132,14 @@ $('#presidents').on('click', 'img', function() {
 					$( "#info dl dd:nth-child(20) a" ).attr("href", pres.Wikipedia_entry);
 				}
 			}); // end $.each
+
+			// function above
 			positionInfo();
-    },
+    }, // end success
 		// give us a message if the JSON file didn't load correctly
 		error: function(request, errorType, errorMessage) {
       alert('Error: ' + errorType + ' With message: ' + errorMessage);
-    },
+    }, // end error
     timeout: 3000
 
 }); // end $.ajax()

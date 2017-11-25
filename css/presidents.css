@@ -15,7 +15,6 @@ body {
   display: flex;
   justify-content: space-around;
   flex-wrap: wrap;
-  flex-basis: 200px;
 }
 
 .small-pres {
@@ -38,7 +37,7 @@ body {
   border: 1px solid #666;
   z-index: 10;
   overflow: auto;
-  /* evil - but none of it works without JS, so why not? */
+  /* evil - but none of it works without JS, so why not */
   display: none;
 }
 
@@ -96,4 +95,11 @@ a {
 a:hover {
   color: #d332cb;
   text-decoration: none;
+}
+
+/* fixes large gap between images when layout goes from
+   3 images in a row to 2
+   */
+@media (max-width: 965px) {
+  body { max-width: 700px; }
 }
