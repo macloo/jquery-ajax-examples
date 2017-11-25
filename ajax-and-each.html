@@ -87,7 +87,7 @@ $('#presidents').on('click', 'img', function() {
 						death = pres.Death_date + " " + pres.Location_death;
 					}
 					$( "#info dl dd:nth-child(18)" ).html(death);
-					$( "#info dl dd:nth-child(20) a" ).attr("href", Wikipedia_entry);
+					$( "#info dl dd:nth-child(20) a" ).attr("href", pres.Wikipedia_entry);
 				}
 			}); // end $.each
     },
