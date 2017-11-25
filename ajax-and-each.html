@@ -75,12 +75,7 @@ function positionInfo() {
 			'top': top + $(document).scrollTop(),
 			'left': left
 			})
-		.fadeIn()
-		.click(function() {
-				$('#info').hide();
-				$('#overlay').remove();
-				$('body').css('overflow', 'auto');
-		});
+		.fadeIn();
 }
 
 // make a transparent overlay and put the #info on top

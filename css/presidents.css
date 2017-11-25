@@ -36,6 +36,7 @@ body {
   background: #fff;
   padding: 2em 3em;
   border: 1px solid #666;
+  z-index: 10;
   overflow: auto;
 }
 
