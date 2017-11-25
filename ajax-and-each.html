@@ -34,9 +34,9 @@
 		<dt>College:</dt>
 			<dd>"College"</dd>
 		<dt>Born:</dt>
-			<dd><span>"Birth-date"</span> <span>"Birthplace"</span></dd>
+			<dd>"Birth-date" "Birthplace"</dd>
 		<dt>Died:</dt>
-			<dd><span>"Death-date"</span> <span>"Location-death"</span></dd>
+			<dd>"Death-date" "Location-death"</dd>
 		<dt>Read more:</dt>
 			<dd><a href="Wikipedia-entry" target="_blank">Wikipedia</a></dd>
 	</dl>
@@ -80,9 +80,14 @@ $('#presidents').on('click', 'img', function() {
 					$( "#info dl dd:nth-child(14)" ).html(pres.College);
 					var birth = pres.Birth_date + " " + pres.Birthplace;
 					$( "#info dl dd:nth-child(16)" ).html(birth);
-					var death = pres.Death_date + " " + pres.Location_death;
+					var death;
+					if (pres.Location_death == "NA") {
+						death = pres.Death_date;
+					} else {
+						death = pres.Death_date + " " + pres.Location_death;
+					}
 					$( "#info dl dd:nth-child(18)" ).html(death);
-					$( "#info dl dd:nth-child(20)" ).html("foobar");
+					$( "#info dl dd:nth-child(20) a" ).attr("href", Wikipedia_entry);
 				}
 			}); // end $.each
     },
