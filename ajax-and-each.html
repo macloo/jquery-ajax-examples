@@ -34,6 +34,38 @@ $(document).ready(function() {
 		imgTag = '<img class="small-pres" src="images/' + filename + '" alt="President">';
 		$('#presidents').append(imgTag);
 	}
+
+// show info when a president image is clicked
+$('#presidents').on('click', 'img', function() {
+	// use DOM to get pres number from image
+	var whichClicked = $(this).index()+1;
+	// we wouldn't need Ajax for this but we'll do it anyway
+  $.ajax('js/pres.json', {
+    success: function(result) {
+      $.each(result, function(index, pres) {
+				if (pres.Presidency == whichClicked) {
+					alert(pres.President);
+				}
+			}); // end $.each
+/*
+{"Presidency":2,"President":"John Adams","Wikipedia-entry":"http://en.wikipedia.org/wiki/John_Adams","Took-office":"3/4/1797","Left-office":"3/4/1801","Party":"Federalist ","Home-state":"Massachusetts","Occupation":"Lawyer","College":"Harvard","Age-when-took-office":61,"Birth-date":"10/30/1735","Birthplace":"Quincy, Massachusetts","Death-date":"7/4/1826","Location-death":"Quincy, Massachusetts"},
+
+        // see HTML to see why this 'index' works
+    		var deal = $('.deal-' + index);
+    		// this is same as prev example, but now with 'city'
+    		deal.find('h3').html(dealItem.name);
+    		deal.find('p').html(dealItem.price);
+      });
+*/
+    },
+		// give us a message if the JSON file didn't load correctly
+		error: function(request, errorType, errorMessage) {
+      alert('Error: ' + errorType + ' With message: ' + errorMessage);
+    },
+    timeout: 3000
+
+}); // end $.ajax()
+}); // end .on('click')
 }); // end document ready
 </script>
 </body>
