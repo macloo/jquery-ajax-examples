@@ -16,7 +16,33 @@
 
 <section id="presidents"></section>
 
-<p>You should see 45 presidential portraits above.</p>
+<div id="info">
+	<h2>President</h2>
+	<dl>
+		<dt>Party:</dt>
+			<dd>"Party"</dd>
+		<dt>Took office:</dt>
+			<dd>"Took-office"</dd>
+		<dt>Age:</dt>
+			<dd>"Age-when-took-office"</dd>
+		<dt>Left office:</dt>
+			<dd>"Left-office"</dd>
+		<dt>Home state:</dt>
+			<dd>"Home-state"</dd>
+		<dt>Occupation:</dt>
+			<dd>"Occupation"</dd>
+		<dt>College:</dt>
+			<dd>"College"</dd>
+		<dt>Born:</dt>
+			<dd><span>"Birth-date"</span> <span>"Birthplace"</span></dd>
+		<dt>Died:</dt>
+			<dd><span>"Death-date"</span> <span>"Location-death"</span></dd>
+		<dt>Read more:</dt>
+			<dd><a href="Wikipedia-entry" target="_blank">Wikipedia</a></dd>
+	</dl>
+</div>
+
+<p class="clearfix">You should see 45 presidential portraits above.</p>
 
 <!-- only scripts below this -->
 <script src="js/jquery.min.js"></script>
@@ -37,26 +63,28 @@ $(document).ready(function() {
 
 // show info when a president image is clicked
 $('#presidents').on('click', 'img', function() {
-	// use DOM to get pres number from image
+	// use DOM to get pres number from the clicked image
 	var whichClicked = $(this).index()+1;
 	// we wouldn't need Ajax for this but we'll do it anyway
   $.ajax('js/pres.json', {
     success: function(result) {
       $.each(result, function(index, pres) {
 				if (pres.Presidency == whichClicked) {
-					alert(pres.President);
+					$( "#info h2").html(pres.President);
+					$( "#info dl dd:nth-child(2)" ).html(pres.Party);
+					$( "#info dl dd:nth-child(4)" ).html(pres.Took_office);
+					$( "#info dl dd:nth-child(6)" ).html(pres.Age_when_took_office);
+					$( "#info dl dd:nth-child(8)" ).html(pres.Left_office);
+					$( "#info dl dd:nth-child(10)" ).html(pres.Home_state);
+					$( "#info dl dd:nth-child(12)" ).html(pres.Occupation);
+					$( "#info dl dd:nth-child(14)" ).html(pres.College);
+					var birth = pres.Birth_date + " " + pres.Birthplace;
+					$( "#info dl dd:nth-child(16)" ).html(birth);
+					var death = pres.Death_date + " " + pres.Location_death;
+					$( "#info dl dd:nth-child(18)" ).html(death);
+					$( "#info dl dd:nth-child(20)" ).html("foobar");
 				}
 			}); // end $.each
-/*
-{"Presidency":2,"President":"John Adams","Wikipedia-entry":"http://en.wikipedia.org/wiki/John_Adams","Took-office":"3/4/1797","Left-office":"3/4/1801","Party":"Federalist ","Home-state":"Massachusetts","Occupation":"Lawyer","College":"Harvard","Age-when-took-office":61,"Birth-date":"10/30/1735","Birthplace":"Quincy, Massachusetts","Death-date":"7/4/1826","Location-death":"Quincy, Massachusetts"},
-
-        // see HTML to see why this 'index' works
-    		var deal = $('.deal-' + index);
-    		// this is same as prev example, but now with 'city'
-    		deal.find('h3').html(dealItem.name);
-    		deal.find('p').html(dealItem.price);
-      });
-*/
     },
 		// give us a message if the JSON file didn't load correctly
 		error: function(request, errorType, errorMessage) {
