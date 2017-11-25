@@ -106,7 +106,7 @@ $('#presidents').on('click', 'img', function() {
 			$('#info').show();
       $.each(result, function(index, pres) {
 				if (pres.Presidency == whichClicked) {
-					$( "#info h2").html(pres.President);
+					$( "#info h2").html(pres.President + " (" + pres.Presidency + ")");
 					// using jQuery nth-child() means we don't need to add IDs
 					$( "#info dl dd:nth-child(2)" ).html(pres.Party);
 					$( "#info dl dd:nth-child(4)" ).html(pres.Took_office);
