@@ -38,6 +38,12 @@ body {
   border: 1px solid #666;
   z-index: 10;
   overflow: auto;
+  display: none;
+}
+
+/* override display: none if no JS */
+body.no-js #info {
+    display: block;
 }
 
 #info dt, #info dd {

@@ -7,10 +7,10 @@
 	<link rel="stylesheet" href="css/normalize.min.css">
 	<link rel="stylesheet" href="css/presidents.css">
 </head>
-<body>
+<body class="no-js">
 <h1>$.ajax() example with $.each()</h1>
 
-<p>This example uses <code>$.each()</code> to loop through a JSON file and identify the object that atches the clicked image.</p>
+<p>This example uses <code>$.each()</code> to loop through a JSON file and identify the object that matches the clicked image. Click any U.S. president to see information about him. The JSON file is accessed with an <code>$.ajax()</code> call to the server (really not necessary, but I was working with <code>$.ajax()</code>).</p>
 
 <p>First, jQuery loads the images into a CSS flexbox container, which distributes them in a grid. Note that by default, flexbox would distort the images that are shorter in height than others in their row; the property to correct that is <code>align-self</code>. Ideally, in this layout, all the images should be the same width and height. These images are all 300 pixels wide, but the height varies.</p>
 
@@ -50,7 +50,7 @@
 <script>
 $(document).ready(function() {
 	// hide the modal div immediately
-	$('#info').hide();
+	$('body').removeClass('no-js');
 	// load the president images
 	var num, filename, imgTag;
 	for (var i=1; i<46; i++) {
@@ -102,6 +102,8 @@ $('#presidents').on('click', 'img', function() {
 	showOverlay();
 	// we wouldn't need Ajax for this but we'll do it anyway
   $.ajax('js/pres.json', {
+		contentType: 'application/json',
+		dataType: 'json',
     success: function(result) {
 			$('#info').show();
       $.each(result, function(index, pres) {
