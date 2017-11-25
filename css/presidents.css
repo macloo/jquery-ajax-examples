@@ -1,0 +1,105 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Calibri', 'Verdana', sans-serif;
+  color: #333;
+  background: #fff9ef;
+  margin: 2em auto;
+  padding: 2em;
+  max-width: 1024px;
+}
+
+#presidents {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.small-pres {
+  display: flex;
+  align-self: flex-start;
+  margin-bottom: 1em;
+}
+
+.clearfix {
+  clear: both;
+}
+
+
+/* info box styles */
+
+#info {
+  position: absolute;
+  background: #fff;
+  padding: 2em 3em;
+  border: 1px solid #666;
+  z-index: 10;
+  overflow: auto;
+  /* evil - but none of it works without JS, so why not */
+  display: none;
+}
+
+#info dt, #info dd {
+  line-height: 1.5em;
+  float: left;
+}
+
+#info dt {
+  clear: left;
+  margin-right: 1em;
+  font-weight: bold;
+}
+
+#info dd {
+  margin-left: 0;
+}
+
+#overlay { /* dim screen for simple lightbox */
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	background: #000; /* black, no image */
+}
+
+
+/* heading and text styles */
+
+h1, h2 {
+  font-family: 'Cambria', 'Georgia', serif;
+  font-size: 3em;
+  font-weight: normal;
+  line-height: normal;
+  margin: 0;
+}
+
+h2 {
+  font-size: 2em;
+}
+
+p {
+  line-height: 1.5em;
+}
+
+
+/* links */
+
+a {
+  color: #237b93;
+  text-decoration: underline;
+}
+
+a:hover {
+  color: #d332cb;
+  text-decoration: none;
+}
+
+/* fixes large gap between images when layout goes from
+   3 images in a row to 2
+   */
+@media (max-width: 965px) {
+  body { max-width: 700px; }
+}
