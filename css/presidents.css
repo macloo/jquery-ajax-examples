@@ -32,10 +32,11 @@ body {
 /* info box styles */
 
 #info {
+  position: absolute;
   background: #fff;
-  padding: 1em 2em;
+  padding: 2em 3em;
   border: 1px solid #666;
-  float: left;
+  overflow: auto;
 }
 
 #info dt, #info dd {
@@ -51,6 +52,20 @@ body {
 
 #info dd {
   margin-left: 0;
+}
+
+#overlay { /* dim screen for simple lightbox */
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	background: #000; /* black, no image */
+}
+
+#lightbox {
+	position: absolute;
+	background: #fff;
 }
 
 

@@ -10,7 +10,7 @@
 <body>
 <h1>$.ajax() example with $.each()</h1>
 
-<p>This example uses <code>$.each()</code> to ... (There are 45 presidents.)</p>
+<p>This example uses <code>$.each()</code> to loop through a JSON file and identify the object that atches the clicked image.</p>
 
 <p>First, jQuery loads the images into a CSS flexbox container, which distributes them in a grid. Note that by default, flexbox would distort the images that are shorter in height than others in their row; the property to correct that is <code>align-self</code>. Ideally, in this layout, all the images should be the same width and height. These images are all 300 pixels wide, but the height varies.</p>
 
@@ -49,6 +49,8 @@
 
 <script>
 $(document).ready(function() {
+	// hide the modal div immediately 
+	$(#info).hide();
 	// load the president images
 	var num, filename, imgTag;
 	for (var i=1; i<46; i++) {
@@ -71,6 +73,7 @@ $('#presidents').on('click', 'img', function() {
       $.each(result, function(index, pres) {
 				if (pres.Presidency == whichClicked) {
 					$( "#info h2").html(pres.President);
+					// using jQuery nth-child() means we don't need to add IDs
 					$( "#info dl dd:nth-child(2)" ).html(pres.Party);
 					$( "#info dl dd:nth-child(4)" ).html(pres.Took_office);
 					$( "#info dl dd:nth-child(6)" ).html(pres.Age_when_took_office);
