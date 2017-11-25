@@ -49,7 +49,7 @@
 
 <script>
 $(document).ready(function() {
-	// hide the modal div immediately 
+	// hide the modal div immediately
 	$(#info).hide();
 	// load the president images
 	var num, filename, imgTag;
@@ -63,13 +63,52 @@ $(document).ready(function() {
 		$('#presidents').append(imgTag);
 	}
 
+// handle the overlay
+// position the #info DIV in the center of the window
+function positionInfo() {
+	var top  = ($(window).height() - $('#info').height()) / 2;
+	var left = ($(window).width()  - $('#info').width()) / 2;
+
+	// using those variables we just filled ...
+	$('#info')
+		.css({
+			'top': top + $(document).scrollTop(),
+			'left': left
+			})
+		.fadeIn()
+		.click(function() {
+				$('#info').hide();
+				$('#overlay').remove();
+				$('body').css('overflow', 'auto');
+		});
+}
+
+// make a transparent overlay and put the #info on top
+function showOverlay() {
+	// hide scrollbar
+	$('body').css('overflow', 'hidden');
+
+	$('<div id="overlay"></div>')
+		.css('top', $(document).scrollTop())
+		.css('opacity', '0')
+		.animate({'opacity' : '0.5'}, 'slow')
+		.click(function() {
+				$('#info').hide();
+				$('#overlay').remove();
+				$('body').css('overflow', 'auto');
+		})
+		.appendTo('body');
+}
+
 // show info when a president image is clicked
 $('#presidents').on('click', 'img', function() {
 	// use DOM to get pres number from the clicked image
 	var whichClicked = $(this).index()+1;
+	showOverlay();
 	// we wouldn't need Ajax for this but we'll do it anyway
   $.ajax('js/pres.json', {
     success: function(result) {
+			$('#info').show();
       $.each(result, function(index, pres) {
 				if (pres.Presidency == whichClicked) {
 					$( "#info h2").html(pres.President);
@@ -93,6 +132,7 @@ $('#presidents').on('click', 'img', function() {
 					$( "#info dl dd:nth-child(20) a" ).attr("href", pres.Wikipedia_entry);
 				}
 			}); // end $.each
+			positionInfo();
     },
 		// give us a message if the JSON file didn't load correctly
 		error: function(request, errorType, errorMessage) {
