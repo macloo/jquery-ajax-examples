@@ -88,8 +88,8 @@ function showOverlay() {
 		.css('opacity', '0')
 		.animate({'opacity' : '0.5'}, 'slow')
 		.click(function() {
-				$('#info').hide();
-				$('#overlay').remove();
+				$('#info').fadeOut();
+				$('#overlay').fadeOut().remove();
 				$('body').css('overflow', 'auto');
 		})
 		.appendTo('body');
