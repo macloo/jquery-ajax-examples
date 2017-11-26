@@ -78,7 +78,17 @@
 
 				// find the center, determine top and left coordinates
 				var top = ($(window).height() - infoH) / 2;
-				var left = ($(window).width() - infoW) / 2;
+				var left;
+				if ($(window).width() > 550 ) {
+					left = ($(window).width() - infoW) / 2;
+				} else {
+					// screen is 550 pixels wide or less
+					left = 0;
+					$('#info').css({
+						'width': '100%',
+						'padding': '3em 2em'
+					});
+				}
 
 				// using those variables we just filled, position the box
 				$('#info')
