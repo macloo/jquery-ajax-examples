@@ -33,10 +33,10 @@ body {
 #info {
   position: absolute;
   background: #fff;
-  padding: 2em 3em;
+  padding: 4em 6em; /* note padding - use jQuery .outerWidth */
   border: 1px solid #666;
   z-index: 10;
-  overflow: auto;
+  overflow: auto; /* because floats inside */ 
   /* evil - but none of it works without JS, so why not */
   display: none;
 }

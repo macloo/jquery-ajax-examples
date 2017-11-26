@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title> U.S. Presidents jQuery Example </title>
+	<link rel="stylesheet" href="css/normalize.min.css">
+	<link rel="stylesheet" href="css/presidents.css">
+</head>
+<body>
+<h1>U.S. Presidents</h1>
+
+<p>This example uses <code>$.each()</code> to loop through a JSON file and identify the object that matches the clicked image. Click any U.S. president to see information about him. This version does not use <code>$.ajax()</code>.</p>
+
+<p>First, jQuery loads the images into a CSS flexbox container, which distributes them in a grid. Note that by default, flexbox would distort the images that are shorter in height than others in their row; the property to correct that is <code>align-self</code>. Ideally, in this layout, all the images should be the same width and height. These images are all 300 pixels wide; however, the height varies.</p>
+
+<section id="presidents"></section>
+
+<div id="info">
+	<h2>President</h2>
+	<dl>
+		<dt>Party:</dt>
+			<dd>"Party"</dd>
+		<dt>Took office:</dt>
+			<dd>"Took-office"</dd>
+		<dt>Age:</dt>
+			<dd>"Age-when-took-office"</dd>
+		<dt>Left office:</dt>
+			<dd>"Left-office"</dd>
+		<dt>Home state:</dt>
+			<dd>"Home-state"</dd>
+		<dt>Occupation:</dt>
+			<dd>"Occupation"</dd>
+		<dt>College:</dt>
+			<dd>"College"</dd>
+		<dt>Born:</dt>
+			<dd>"Birth-date" "Birthplace"</dd>
+		<dt>Died:</dt>
+			<dd>"Death-date" "Location-death"</dd>
+		<dt>Read more:</dt>
+			<dd><a href="Wikipedia-entry" target="_blank">Wikipedia</a></dd>
+	</dl>
+</div>
+
+<p class="clearfix">You should see 45 presidential portraits above.</p>
+
+<!-- only scripts below this -->
+<script src="js/jquery.min.js"></script>
+<!-- load JSON file -->
+<script src="js/pres.json"></script>
+
+<script>
+$(document).ready(function() {
+
+	// load the president images
+	var num, filename, imgTag;
+	for (var i=1; i<46; i++) {
+		num = i.toString();
+		if (i < 10) {
+			num = "0" + num;
+		}
+		filename = "pr" + num + ".jpg";
+		imgTag = '<img class="small-pres" src="images/' + filename + '" alt="President">';
+		$('#presidents').append(imgTag);
+	}
+
+// function to handle the modal overlay - #info div
+// position the #info DIV in the center of the window
+function positionInfo() {
+	// get the height and width of newly filled div
+	var infoH = $('#info').outerHeight();
+	var infoW = $('#info').outerWidth();
+	// hide it so we can fadeIn()
+	$('#info').hide();
+
+	// find the center, determine top and left coordinates
+	var top  = ($(window).height() - infoH) / 2;
+	var left = ($(window).width()  - infoW) / 2;
+
+	// using those variables we just filled, position the box
+	$('#info')
+		.css({
+			'top': top + $(document).scrollTop(),
+			'left': left
+			})
+		.fadeIn();
+}
+
+// make a semi-transparent overlay to cover the full screen
+function showOverlay() {
+	// hide scrollbar
+	$('body').css('overflow', 'hidden');
+	// create and show a full-screen div
+	$('<div id="overlay"></div>')
+		.css('top', $(document).scrollTop())
+		.css('opacity', '0')
+		.animate({'opacity' : '0.5'}, 'slow')
+		// click it to close modal and restore scrolling
+		.click(function() {
+				$('#info').fadeOut();
+				$('#overlay').fadeOut().remove();
+				$('body').css('overflow', 'auto');
+		})
+		.appendTo('body');
+}
+
+// show info when a president image is clicked
+$('#presidents').on('click', 'img', function() {
+	// use DOM to get president number from the clicked image
+	var whichClicked = $(this).index()+1;
+
+	// function above
+	showOverlay();
+
+	// no Ajax version
+			// makes the div visible
+			$('#info').css( "display", "block" );
+			// loop through the JSON data
+      $.each(presData, function(index, pres) {
+				if (pres.Presidency == whichClicked) {
+					$( "#info h2").html(pres.President + " (" + pres.Presidency + ")");
+					// using jQuery nth-child() means we don't need to add IDs
+					$( "#info dl dd:nth-child(2)" ).html(pres.Party);
+					$( "#info dl dd:nth-child(4)" ).html(pres.Took_office);
+					$( "#info dl dd:nth-child(6)" ).html(pres.Age_when_took_office);
+					$( "#info dl dd:nth-child(8)" ).html(pres.Left_office);
+					$( "#info dl dd:nth-child(10)" ).html(pres.Home_state);
+					$( "#info dl dd:nth-child(12)" ).html(pres.Occupation);
+					$( "#info dl dd:nth-child(14)" ).html(pres.College);
+					var birth = pres.Birth_date + " " + pres.Birthplace;
+					$( "#info dl dd:nth-child(16)" ).html(birth);
+					var death;
+					if (pres.Location_death == "NA") {
+						death = pres.Death_date;
+					} else {
+						death = pres.Death_date + " " + pres.Location_death;
+					}
+					$( "#info dl dd:nth-child(18)" ).html(death);
+					$( "#info dl dd:nth-child(20) a" ).attr("href", pres.Wikipedia_entry);
+				}
+			}); // end $.each
+
+			// run the function above
+			positionInfo();
+
+}); // end .on('click')
+}); // end document ready
+</script>
+</body>
+</html>
